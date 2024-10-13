@@ -1,11 +1,25 @@
 import redis
-from config import REDIS_HOST, REDIS_PORT, REDIS_DB
+from config import Config
+import logging
 
-redis_client = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
+logger = logging.getLogger(__name__)
+
+redis_client = redis.Redis(
+    host=Config.REDIS_HOST, port=Config.REDIS_PORT, db=Config.REDIS_DB
+)
 
 
 def get_cached_data(key):
-    return redis_client.get(key)
+    try:
+        data = redis_client.get(key)
+        if data:
+            logger.info(f"Cache hit for key: {key}")
+        else:
+            logger.info(f"Cache miss for key: {key}")
+        return data
+    except redis.RedisError as e:
+        logger.error(f"Error accessing Redis: {str(e)}")
+        return None
 
 
 def set_cached_data(key, value, expiration):
