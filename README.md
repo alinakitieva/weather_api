@@ -2,6 +2,8 @@
 
 ## Project Overview
 
+Python sample solution for the [Weather API](https://roadmap.sh/projects/weather-api-wrapper-service) challenge from [roadmap.sh](https://roadmap.sh/).
+
 This project is a simple Flask-based Weather API that fetches weather data from a third-party API (Visual Crossing
 Weather API) based on a location and optional date range. The API supports caching using Redis to minimize API requests
 and improve performance. It also includes rate limiting to prevent abuse.
